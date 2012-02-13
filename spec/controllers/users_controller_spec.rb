@@ -37,18 +37,37 @@ describe UsersController do
   end
 
 
-
-
   describe "GET 'new'" do
     it "should be successful" do
       get 'new'
       response.should be_success
     end
 
-    it "should have the right title"  do
+    it "should have the right title" do
       get 'new'
       response.should have_selector("title", :content => "Sign up")
     end
+
+    it "should have a name field" do
+      get :new
+      response.should have_selector("input[name='user[name]'][type='text']")
+    end
+
+    it "should have an email field" do
+      get :new
+      response.should have_selector("input[name='user[email]'][type='text']")
+    end
+
+    it "should have an password field" do
+      get :new
+      response.should have_selector("input[name='user[password]'][type='password']")
+    end
+
+    it "should have an password confirmation field" do
+      get :new
+      response.should have_selector("input[name='user[password_confirmation]'][type='password']")
+    end
+
 
   end
 
@@ -58,8 +77,8 @@ describe UsersController do
     describe "failure" do
 
       before(:each) do
-        @attr = { :name => "", :email => "", :password => "",
-                  :password_confirmation => "" }
+        @attr = {:name => "", :email => "", :password => "",
+                 :password_confirmation => ""}
       end
 
       it "should not create a user" do
@@ -82,8 +101,8 @@ describe UsersController do
     describe "success" do
 
       before(:each) do
-        @attr = { :name => "New User", :email => "user@example.com",
-                  :password => "foobar", :password_confirmation => "foobar" }
+        @attr = {:name => "New User", :email => "user@example.com",
+                 :password => "foobar", :password_confirmation => "foobar"}
       end
 
       it "should create a user" do
